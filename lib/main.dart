@@ -95,9 +95,12 @@ class _UploadBottomPanelState extends State<UploadBottomPanel> {
                                   2 /
                                   0.6625,
                               decoration: BoxDecoration(
-                                color: Color(0xFFE57697).withOpacity(0.2),
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.2),
                                 border: Border.all(
-                                    color: Color(0xFFE57697), width: 3),
+                                    color: Theme.of(context).primaryColor,
+                                    width: 3),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: ClipRRect(
@@ -117,14 +120,17 @@ class _UploadBottomPanelState extends State<UploadBottomPanel> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: Color(0xFFE57697), width: 1),
-                                      color: Color(0xFFE57697).withOpacity(0.2),
+                                          color: Theme.of(context).primaryColor,
+                                          width: 1),
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.2),
                                       shape: BoxShape.circle),
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Icon(
-                                      Icons.add,
-                                      color: Color(0xFFE57697),
+                                      Icons.image,
+                                      color: Theme.of(context).primaryColor,
                                       size: 40,
                                     ),
                                   ),
@@ -137,10 +143,10 @@ class _UploadBottomPanelState extends State<UploadBottomPanel> {
                     ),
                   ),
                   Text(
-                    "Wallpapers",
+                    "Photos",
                     style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xFFE57697),
+                        color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold),
                   )
                 ],

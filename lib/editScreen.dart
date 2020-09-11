@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter_image_editor/saveScreen.dart';
 import 'package:image_editor/image_editor.dart' hide ImageSource;
 
 class EditWallScreen extends StatefulWidget {
@@ -265,9 +267,15 @@ class _EditWallScreenState extends State<EditWallScreen> {
     final Duration diff = DateTime.now().difference(start);
     image.writeAsBytesSync(result);
     print('image_editor time : $diff');
-    // Future.delayed(Duration(seconds: 0)).then((value) =>
-    //     Navigator.pushReplacementNamed(context, UploadWallRoute,
-    //         arguments: [image]));
+    Future.delayed(Duration(seconds: 0)).then(
+      (value) => Navigator.pushReplacement(
+        context,
+        CupertinoPageRoute(
+            builder: (context) => SaveImageScreen(
+                  arguments: [image],
+                )),
+      ),
+    );
   }
 
   void flip() {
