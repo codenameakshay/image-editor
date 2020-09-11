@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_editor/editScreen.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
@@ -39,8 +41,16 @@ class _UploadBottomPanelState extends State<UploadBottomPanel> {
       setState(() {
         _wallpaper = File(pickedFile.path);
       });
-      // Future.delayed(Duration(seconds: 0)).then((value) =>
-      //     Navigator.pushNamed(context, EditWallRoute, arguments: [_wallpaper]));
+      Future.delayed(Duration(seconds: 0)).then(
+        (value) => Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => EditWallScreen(
+              arguments: [_wallpaper],
+            ),
+          ),
+        ),
+      );
     }
   }
 
