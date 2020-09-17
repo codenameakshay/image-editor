@@ -33,11 +33,12 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: Text(
-          "Upload Wallpaper",
-          style: TextStyle(color: Theme.of(context).accentColor),
+          "Export Photo",
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: Container(
+        color: Colors.white,
         child: Column(
           children: <Widget>[
             ClipRRect(
@@ -55,13 +56,36 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
             ),
             //
             Spacer(),
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FloatingActionButton.extended(
+                      heroTag: "SAVE",
+                      icon: Icon(Icons.save),
+                      label: Text("SAVE"),
+                      onPressed: () {
+                        saveImage();
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FloatingActionButton.extended(
+                      heroTag: "SHARE",
+                      icon: Icon(Icons.share),
+                      label: Text("SHARE"),
+                      onPressed: () {}),
+                )
+              ],
+            ),
+            Spacer(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.1,
                     child: Center(
                       child: Icon(
                         Icons.info,
@@ -70,12 +94,12 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.6,
+                    width: MediaQuery.of(context).size.width * 0.4,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(2.0),
                       child: Center(
                         child: Text(
-                          "Note - We have a strong review policy, and submitting irrelevant images will lead to ban. We take about 24 hours to review the submissions, and after a successful review, your photo will be visible in the profile/community section.",
+                          "Note - The images are saved in the best possible quality.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 10,
