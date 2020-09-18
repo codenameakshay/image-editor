@@ -14,24 +14,18 @@ class SaveImageScreen extends StatefulWidget {
 class _SaveImageScreenState extends State<SaveImageScreen> {
   File image;
   bool savedImage;
-  bool loading;
   @override
   void initState() {
     super.initState();
     image = widget.arguments[0];
     savedImage = false;
-    loading = false;
   }
 
   Future saveImage() async {
-    setState(() {
-      loading = true;
-    });
     renameImage();
     await GallerySaver.saveImage(image.path, albumName: "PhotoEditor");
     setState(() {
       savedImage = true;
-      loading = false;
     });
   }
 
@@ -99,9 +93,7 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
                   child: FloatingActionButton.extended(
                       disabledElevation: 0,
                       heroTag: "SAVE",
-                      icon: loading
-                          ? CircularProgressIndicator()
-                          : Icon(Icons.save),
+                      icon: Icon(Icons.save),
                       label: savedImage ? Text("SAVED") : Text("SAVE"),
                       backgroundColor: savedImage
                           ? Colors.grey
