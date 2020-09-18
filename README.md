@@ -11,7 +11,7 @@
 
 
 </div>
-<!-- <a href='https://play.google.com/store/apps/details?id=com.hash.prism&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Prism UI Mockup' src='demo/Prism_Mockup.png'/></a> -->
+<a><img alt='Prism UI Mockup' src='demo/ImageMockup.png'/></a>
 
 This app offers image editing features like Saturation, Brightness, Crop, Contrast, Rotation & Flip in an easy-to-use minimalistic approach. It can export the edited images in high quality, or directly share them to other apps like WhatsApp, Twitter, Instagram, etc.
 
