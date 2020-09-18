@@ -13,8 +13,6 @@ class SaveImageScreen extends StatefulWidget {
 
 class _SaveImageScreenState extends State<SaveImageScreen> {
   File image;
-  List<int> imageBytes;
-  List<int> imageBytesThumb;
   bool savedImage;
   bool loading;
   @override
@@ -35,9 +33,6 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
       savedImage = true;
       loading = false;
     });
-    // Img.Image editedImage = Img.decodeImage(image.readAsBytesSync());
-    // File(image.path.split('.')[0] + '1' + image.path.split('.')[1])
-    //   ..writeAsBytesSync(Img.encodePng(editedImage));
   }
 
   void renameImage() {
@@ -50,6 +45,22 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
     image = image.renameSync(
         "${ogPath.split('/image')[0]}/PhotoEditor_$dateSlug.$ogExt");
     print(image.path);
+  }
+
+  void shareImage() {
+    final RenderBox box = context.findRenderObject();
+    if (Platform.isAndroid) {
+      Share.shareFile(image,
+          subject: 'Image edited by Photo Editor',
+          text:
+              'Hey, Look what I edited with this amazing app called Photo Editor.',
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    } else {
+      Share.share(
+          'Hey, Look what I edited with this amazing app called Photo Editor.',
+          subject: 'Image edited by Photo Editor',
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    }
   }
 
   @override
@@ -108,21 +119,7 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
                       icon: Icon(Icons.share),
                       label: Text("SHARE"),
                       onPressed: () {
-                        final RenderBox box = context.findRenderObject();
-                        if (Platform.isAndroid) {
-                          Share.shareFile(image,
-                              subject: 'Image edited by Photo Editor',
-                              text:
-                                  'Hey, Look what I edited with this amazing app called Photo Editor.',
-                              sharePositionOrigin:
-                                  box.localToGlobal(Offset.zero) & box.size);
-                        } else {
-                          Share.share(
-                              'Hey, Look what I edited with this amazing app called Photo Editor.',
-                              subject: 'Image edited by Photo Editor',
-                              sharePositionOrigin:
-                                  box.localToGlobal(Offset.zero) & box.size);
-                        }
+                        shareImage();
                       }),
                 )
               ],

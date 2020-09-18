@@ -14,21 +14,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(body: UploadBottomPanel()));
+        home: Scaffold(body: SelectBottomPanel()));
   }
 }
 
-class UploadBottomPanel extends StatefulWidget {
-  const UploadBottomPanel({
+class SelectBottomPanel extends StatefulWidget {
+  const SelectBottomPanel({
     Key key,
   }) : super(key: key);
 
   @override
-  _UploadBottomPanelState createState() => _UploadBottomPanelState();
+  _SelectBottomPanelState createState() => _SelectBottomPanelState();
 }
 
-class _UploadBottomPanelState extends State<UploadBottomPanel> {
-  File _wallpaper;
+class _SelectBottomPanelState extends State<SelectBottomPanel> {
+  File _image;
   final picker = ImagePicker();
   @override
   void initState() {
@@ -39,14 +39,14 @@ class _UploadBottomPanelState extends State<UploadBottomPanel> {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
-        _wallpaper = File(pickedFile.path);
+        _image = File(pickedFile.path);
       });
       Future.delayed(Duration(seconds: 0)).then(
         (value) => Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (context) => EditWallScreen(
-              arguments: [_wallpaper],
+            builder: (context) => EditPhotoScreen(
+              arguments: [_image],
             ),
           ),
         ),

@@ -7,16 +7,21 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter_image_editor/saveScreen.dart';
 import 'package:image_editor/image_editor.dart' hide ImageSource;
 
-class EditWallScreen extends StatefulWidget {
+class EditPhotoScreen extends StatefulWidget {
   final List arguments;
-  EditWallScreen({this.arguments});
+  EditPhotoScreen({this.arguments});
   @override
-  _EditWallScreenState createState() => _EditWallScreenState();
+  _EditPhotoScreenState createState() => _EditPhotoScreenState();
 }
 
-class _EditWallScreenState extends State<EditWallScreen> {
+class _EditPhotoScreenState extends State<EditPhotoScreen> {
   final GlobalKey<ExtendedImageEditorState> editorKey =
       GlobalKey<ExtendedImageEditorState>();
+
+  double sat = 1;
+  double bright = 0;
+  double con = 1;
+
   final defaultColorMatrix = const <double>[
     1,
     0,
@@ -58,10 +63,6 @@ class _EditWallScreenState extends State<EditWallScreen> {
 
     return m;
   }
-
-  double sat = 1;
-  double bright = 0;
-  double con = 1;
 
   List<double> calculateContrastMatrix(double contrast) {
     final m = List<double>.from(defaultColorMatrix);
