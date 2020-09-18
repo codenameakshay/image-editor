@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:path/path.dart' as Path;
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as Img;
 import 'package:photo_view/photo_view.dart';
+import 'package:share/share.dart';
 
 class SaveImageScreen extends StatefulWidget {
   final List arguments;
@@ -15,16 +15,41 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
   File image;
   List<int> imageBytes;
   List<int> imageBytesThumb;
+  bool savedImage;
+  bool loading;
   @override
   void initState() {
     super.initState();
     image = widget.arguments[0];
+    savedImage = false;
+    loading = false;
   }
 
   Future saveImage() async {
-    Img.Image editedImage = Img.decodeImage(image.readAsBytesSync());
-    File(image.path.split('.')[0] + '1' + image.path.split('.')[1])
-      ..writeAsBytesSync(Img.encodePng(editedImage));
+    setState(() {
+      loading = true;
+    });
+    renameImage();
+    await GallerySaver.saveImage(image.path, albumName: "PhotoEditor");
+    setState(() {
+      savedImage = true;
+      loading = false;
+    });
+    // Img.Image editedImage = Img.decodeImage(image.readAsBytesSync());
+    // File(image.path.split('.')[0] + '1' + image.path.split('.')[1])
+    //   ..writeAsBytesSync(Img.encodePng(editedImage));
+  }
+
+  void renameImage() {
+    String ogPath = image.path;
+    List<String> ogPathList = ogPath.split('/');
+    String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
+    DateTime today = new DateTime.now();
+    String dateSlug =
+        "${today.day.toString().padLeft(2, '0')}-${today.month.toString().padLeft(2, '0')}-${today.year.toString()}_${today.hour.toString().padLeft(2, '0')}-${today.minute.toString().padLeft(2, '0')}-${today.second.toString().padLeft(2, '0')}";
+    image = image.renameSync(
+        "${ogPath.split('/image')[0]}/PhotoEditor_$dateSlug.$ogExt");
+    print(image.path);
   }
 
   @override
@@ -61,12 +86,20 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FloatingActionButton.extended(
+                      disabledElevation: 0,
                       heroTag: "SAVE",
-                      icon: Icon(Icons.save),
-                      label: Text("SAVE"),
-                      onPressed: () {
-                        saveImage();
-                      }),
+                      icon: loading
+                          ? CircularProgressIndicator()
+                          : Icon(Icons.save),
+                      label: savedImage ? Text("SAVED") : Text("SAVE"),
+                      backgroundColor: savedImage
+                          ? Colors.grey
+                          : Theme.of(context).primaryColor,
+                      onPressed: savedImage
+                          ? null
+                          : () {
+                              saveImage();
+                            }),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -74,7 +107,23 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
                       heroTag: "SHARE",
                       icon: Icon(Icons.share),
                       label: Text("SHARE"),
-                      onPressed: () {}),
+                      onPressed: () {
+                        final RenderBox box = context.findRenderObject();
+                        if (Platform.isAndroid) {
+                          Share.shareFile(image,
+                              subject: 'Image edited by Photo Editor',
+                              text:
+                                  'Hey, Look what I edited with this amazing app called Photo Editor.',
+                              sharePositionOrigin:
+                                  box.localToGlobal(Offset.zero) & box.size);
+                        } else {
+                          Share.share(
+                              'Hey, Look what I edited with this amazing app called Photo Editor.',
+                              subject: 'Image edited by Photo Editor',
+                              sharePositionOrigin:
+                                  box.localToGlobal(Offset.zero) & box.size);
+                        }
+                      }),
                 )
               ],
             ),
