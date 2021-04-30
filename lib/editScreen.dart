@@ -106,36 +106,47 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
               },
             ),
           ]),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 1,
-              child: buildImage(),
-            ),
-            Expanded(
-              child: SliderTheme(
-                data: const SliderThemeData(
-                  showValueIndicator: ShowValueIndicator.never,
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.width,
+                width: MediaQuery.of(context).size.width,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: buildImage(),
                 ),
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Spacer(flex: 3),
-                      _buildSat(),
-                      Spacer(flex: 1),
-                      _buildBrightness(),
-                      Spacer(flex: 1),
-                      _buildCon(),
-                      Spacer(flex: 3),
-                    ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).size.width,
+                width: MediaQuery.of(context).size.width,
+                child: SliderTheme(
+                  data: const SliderThemeData(
+                    showValueIndicator: ShowValueIndicator.never,
+                  ),
+                  child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Spacer(flex: 3),
+                        _buildSat(),
+                        Spacer(flex: 1),
+                        _buildBrightness(),
+                        Spacer(flex: 1),
+                        _buildCon(),
+                        Spacer(flex: 3),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: _buildFunctions(),

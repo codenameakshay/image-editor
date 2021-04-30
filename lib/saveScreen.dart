@@ -75,7 +75,7 @@ class _SaveImageScreenState extends State<SaveImageScreen> {
               child: Container(
                 color: Theme.of(context).hintColor,
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.9,
                 child: PhotoView(
                   imageProvider: FileImage(image),
                   backgroundDecoration: BoxDecoration(
